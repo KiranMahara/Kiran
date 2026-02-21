@@ -1,69 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Temporarily Unavailable | Kiran Mahara</title>
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #0f172a;
-      color: #f1f5f9;
-      text-align: center;
-    }
-    .container {
-      max-width: 500px;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      font-weight: 600;
-    }
-    p {
-      font-size: 1rem;
-      color: #cbd5e1;
-      line-height: 1.6;
-      margin-bottom: 25px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #2563eb;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-    }
-    .btn:hover {
-      background-color: #1d4ed8;
-    }
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #94a3b8;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Website Temporarily Unavailable</h1>
-    <p>
-      This website is currently undergoing scheduled updates and improvements.
-      If you need to get in touch, please use the contact option below.
-    </p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio v2 Launching Soon</title>
 
-    <a href="mailto:maharakiran77@gmail.com" class="btn">Contact Me</a>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c1c1c);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    color: white;
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.05);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 600px;
+}
+
+h1 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.countdown {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time-box {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.time-box:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.2);
+}
+
+.time-box h2 {
+    font-size: 32px;
+}
+
+.time-box span {
+    font-size: 12px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚀 Portfolio v2.0 Launching Soon</h1>
+    <p>Rebuilding something faster, smarter & cloud-powered.</p>
+
+    <div class="countdown">
+        <div class="time-box">
+            <h2 id="days">00</h2>
+            <span>DAYS</span>
+        </div>
+        <div class="time-box">
+            <h2 id="hours">00</h2>
+            <span>HOURS</span>
+        </div>
+        <div class="time-box">
+            <h2 id="minutes">00</h2>
+            <span>MINUTES</span>
+        </div>
+        <div class="time-box">
+            <h2 id="seconds">00</h2>
+            <span>SECONDS</span>
+        </div>
+    </div>
 
     <div class="footer">
-      © 2026 Kiran Mahara. All rights reserved.
+        © 2026 | Kiran Mahara
     </div>
-  </div>
+</div>
+
+<script>
+// 🔥 Set your launch date here
+const launchDate = new Date("March 1, 2026 12:00:00").getTime();
+
+const countdown = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerText = days;
+    document.getElementById("hours").innerText = hours;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = seconds;
+
+    if (distance < 0) {
+        clearInterval(countdown);
+        document.querySelector(".container").innerHTML =
+            "<h1>🎉 Portfolio is Live!</h1>";
+    }
+}, 1000);
+</script>
+
 </body>
 </html>
