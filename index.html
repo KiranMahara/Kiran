@@ -20,74 +20,120 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c1c1c);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #1f1c2c, #0f0c29);
     color: white;
 }
 
-@keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+/* Floating animated particles */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveBg 30s linear infinite;
+}
+
+@keyframes moveBg {
+    from { transform: translate(0,0); }
+    to { transform: translate(-200px,-200px); }
 }
 
 .container {
-    backdrop-filter: blur(15px);
+    position: relative;
+    backdrop-filter: blur(20px);
     background: rgba(255,255,255,0.05);
-    padding: 50px;
-    border-radius: 20px;
+    padding: 60px;
+    border-radius: 25px;
     text-align: center;
-    box-shadow: 0 0 40px rgba(0,0,0,0.5);
+    box-shadow: 0 0 60px rgba(0,0,0,0.6);
     width: 90%;
-    max-width: 600px;
+    max-width: 750px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
 }
 
 h1 {
     font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 28px;
+    margin-bottom: 15px;
+    font-size: 32px;
+    letter-spacing: 1px;
 }
 
 p {
     font-size: 14px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     opacity: 0.8;
 }
 
 .countdown {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .time-box {
     flex: 1;
+    min-width: 120px;
     margin: 10px;
-    padding: 20px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 15px;
-    transition: 0.3s;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    transition: 0.4s ease;
+    position: relative;
 }
 
 .time-box:hover {
-    transform: translateY(-8px);
-    background: rgba(255,255,255,0.2);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 25px #00f5ff;
 }
 
 .time-box h2 {
-    font-size: 32px;
+    font-size: 38px;
+    font-weight: 600;
+    color: #00f5ff;
+    text-shadow: 0 0 10px #00f5ff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { text-shadow: 0 0 10px #00f5ff; }
+    50% { text-shadow: 0 0 20px #00f5ff; }
+    100% { text-shadow: 0 0 10px #00f5ff; }
 }
 
 .time-box span {
     font-size: 12px;
     opacity: 0.7;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+}
+
+.progress-bar {
+    height: 5px;
+    width: 0%;
+    background: linear-gradient(90deg, #00f5ff, #00ff9d);
+    border-radius: 10px;
+    margin-top: 40px;
+    transition: width 1s linear;
 }
 
 .footer {
-    margin-top: 25px;
+    margin-top: 30px;
     font-size: 12px;
     opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+    .countdown {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 </style>
 </head>
@@ -95,8 +141,8 @@ p {
 <body>
 
 <div class="container">
-    <h1>🚀 Portfolio v2.0 Launching Soon</h1>
-    <p>Rebuilding something faster, smarter & cloud-powered.</p>
+    <h1>🚀 Something Better is Compiling...</h1>
+    <p>Stand by while I ship the next evolution.</p>
 
     <div class="countdown">
         <div class="time-box">
@@ -117,14 +163,16 @@ p {
         </div>
     </div>
 
+    <div class="progress-bar" id="progressBar"></div>
+
     <div class="footer">
         © 2026 | Kiran Mahara
     </div>
 </div>
 
 <script>
-// 🔥 Set your launch date here
 const launchDate = new Date("March 1, 2026 12:00:00").getTime();
+const startDate = new Date().getTime();
 
 const countdown = setInterval(() => {
     const now = new Date().getTime();
@@ -139,6 +187,12 @@ const countdown = setInterval(() => {
     document.getElementById("hours").innerText = hours;
     document.getElementById("minutes").innerText = minutes;
     document.getElementById("seconds").innerText = seconds;
+
+    // Progress bar animation
+    const totalDuration = launchDate - startDate;
+    const elapsed = now - startDate;
+    const progressPercent = Math.min((elapsed / totalDuration) * 100, 100);
+    document.getElementById("progressBar").style.width = progressPercent + "%";
 
     if (distance < 0) {
         clearInterval(countdown);
