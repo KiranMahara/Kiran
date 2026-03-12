@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio v2 | Compiling</title>
+<title>Kiran Mahara | Portfolio v2 Booting</title>
 
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -22,59 +22,62 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#0d1117;
-color:#c9d1d9;
+background:#020409;
+color:#e6edf3;
 overflow:hidden;
 }
 
-/* subtle grid background */
-body::before{
-content:"";
-position:absolute;
-width:200%;
-height:200%;
-background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-background-size:50px 50px;
-animation:gridMove 40s linear infinite;
+/* MATRIX BACKGROUND */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+opacity:.25;
 }
 
-@keyframes gridMove{
-0%{transform:translate(0,0)}
-100%{transform:translate(-200px,-200px)}
-}
+/* MAIN CARD */
 
 .container{
 position:relative;
+z-index:2;
 width:90%;
-max-width:750px;
-background:#161b22;
-border-radius:12px;
-padding:40px;
-box-shadow:0 0 40px rgba(0,0,0,0.7);
+max-width:800px;
+background:#0d1117;
 border:1px solid #30363d;
+border-radius:14px;
+padding:40px;
+box-shadow:0 0 40px rgba(0,0,0,.8);
 }
+
+/* TITLE */
 
 .title{
+color:#58a6ff;
 font-size:22px;
 margin-bottom:25px;
-color:#58a6ff;
 }
 
+/* TERMINAL */
+
 .terminal{
-background:#0d1117;
+background:#010409;
+border:1px solid #30363d;
 border-radius:8px;
 padding:25px;
-border:1px solid #30363d;
+height:220px;
+overflow:hidden;
 font-size:14px;
 line-height:1.7;
-min-height:160px;
 }
+
+/* CURSOR */
 
 .cursor{
 display:inline-block;
 width:8px;
-height:16px;
+height:15px;
 background:#58a6ff;
 margin-left:5px;
 animation:blink 1s infinite;
@@ -86,45 +89,38 @@ animation:blink 1s infinite;
 100%{opacity:0}
 }
 
-/* progress bar */
+/* PROGRESS */
 
-.progress-container{
-margin-top:30px;
-background:#0d1117;
-border-radius:10px;
-overflow:hidden;
-border:1px solid #30363d;
+.progress-wrap{
+margin-top:25px;
 }
 
 .progress-bar{
-height:10px;
+height:12px;
+background:#010409;
+border-radius:10px;
+border:1px solid #30363d;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
 width:0%;
 background:linear-gradient(90deg,#58a6ff,#3fb950);
-animation:load 10s linear forwards;
+transition:width .3s;
 }
 
-@keyframes load{
-0%{width:0%}
-100%{width:100%}
-}
-
-.status{
-margin-top:12px;
+.percent{
+margin-top:8px;
 font-size:13px;
-opacity:0.7;
+opacity:.7;
 }
 
 .footer{
 margin-top:25px;
 font-size:12px;
-opacity:0.5;
+opacity:.5;
 text-align:center;
-}
-
-@media(max-width:600px){
-.container{
-padding:25px;
-}
 }
 
 </style>
@@ -132,50 +128,131 @@ padding:25px;
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <div class="container">
 
-<div class="title">$ Compiling Portfolio_v2...</div>
+<div class="title">$ booting portfolio_v2...</div>
 
 <div class="terminal" id="terminal"></div>
 
-<div class="progress-container">
-<div class="progress-bar"></div>
+<div class="progress-wrap">
+
+<div class="progress-bar">
+<div class="bar" id="bar"></div>
 </div>
 
-<div class="status">Building something awesome...</div>
+<div class="percent" id="percent">0%</div>
+
+</div>
 
 <div class="footer">
-© 2026 | Kiran Mahara
+Portfolio v2 launching soon • © 2026 Kiran Mahara
 </div>
 
 </div>
 
 <script>
 
-const lines = [
-"> Initializing project...",
-"> Loading components...",
-"> Optimizing performance...",
-"> Building UI modules...",
-"> Connecting backend...",
-"> Running final checks...",
+/* MATRIX EFFECT */
+
+const canvas = document.getElementById("matrix")
+const ctx = canvas.getContext("2d")
+
+canvas.height = window.innerHeight
+canvas.width = window.innerWidth
+
+const letters = "01"
+const fontSize = 14
+const columns = canvas.width/fontSize
+
+const drops = []
+
+for(let x=0;x<columns;x++)
+drops[x]=1
+
+function draw(){
+
+ctx.fillStyle="rgba(2,4,9,0.05)"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#0f0"
+ctx.font=fontSize+"px monospace"
+
+for(let i=0;i<drops.length;i++){
+
+const text = letters.charAt(Math.floor(Math.random()*letters.length))
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize)
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0
+
+drops[i]++
+
+}
+
+}
+
+setInterval(draw,33)
+
+/* TERMINAL TYPING */
+
+const lines=[
+"> Starting Kiran Mahara portfolio system...",
+"> Loading UI modules...",
+"> Optimizing animations...",
+"> Connecting GitHub API...",
+"> Building developer experience...",
+"> Running final tests...",
 "> Portfolio v2 launching soon..."
-];
+]
 
-let i = 0;
-const terminal = document.getElementById("terminal");
+const terminal=document.getElementById("terminal")
 
-function typeLine(){
-if(i < lines.length){
-let line = document.createElement("div");
-line.textContent = lines[i];
-terminal.appendChild(line);
-i++;
-setTimeout(typeLine,800);
+let index=0
+
+function addLine(){
+
+if(index<lines.length){
+
+const div=document.createElement("div")
+div.textContent=lines[index]
+
+terminal.appendChild(div)
+
+terminal.scrollTop=terminal.scrollHeight
+
+index++
+
+setTimeout(addLine,900)
+
 }
+
 }
 
-typeLine();
+addLine()
+
+/* PROGRESS BAR */
+
+let progress=0
+
+const bar=document.getElementById("bar")
+const percent=document.getElementById("percent")
+
+function load(){
+
+progress++
+
+bar.style.width=progress+"%"
+percent.innerText=progress+"%"
+
+if(progress<100)
+setTimeout(load,120)
+
+}
+
+load()
 
 </script>
 
