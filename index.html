@@ -1,206 +1,184 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio v2 Launching Soon</title>
+<title>Portfolio v2 | Compiling</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'JetBrains Mono',monospace;
 }
 
-body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background: radial-gradient(circle at top, #1f1c2c, #0f0c29);
-    color: white;
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0d1117;
+color:#c9d1d9;
+overflow:hidden;
 }
 
-/* Floating animated particles */
-body::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: moveBg 30s linear infinite;
+/* subtle grid background */
+body::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+background-size:50px 50px;
+animation:gridMove 40s linear infinite;
 }
 
-@keyframes moveBg {
-    from { transform: translate(0,0); }
-    to { transform: translate(-200px,-200px); }
+@keyframes gridMove{
+0%{transform:translate(0,0)}
+100%{transform:translate(-200px,-200px)}
 }
 
-.container {
-    position: relative;
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.05);
-    padding: 60px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 0 60px rgba(0,0,0,0.6);
-    width: 90%;
-    max-width: 750px;
-    animation: fadeIn 1.5s ease-in-out;
+.container{
+position:relative;
+width:90%;
+max-width:750px;
+background:#161b22;
+border-radius:12px;
+padding:40px;
+box-shadow:0 0 40px rgba(0,0,0,0.7);
+border:1px solid #30363d;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px);}
-    to { opacity: 1; transform: translateY(0);}
+.title{
+font-size:22px;
+margin-bottom:25px;
+color:#58a6ff;
 }
 
-h1 {
-    font-weight: 600;
-    margin-bottom: 15px;
-    font-size: 32px;
-    letter-spacing: 1px;
+.terminal{
+background:#0d1117;
+border-radius:8px;
+padding:25px;
+border:1px solid #30363d;
+font-size:14px;
+line-height:1.7;
+min-height:160px;
 }
 
-p {
-    font-size: 14px;
-    margin-bottom: 40px;
-    opacity: 0.8;
+.cursor{
+display:inline-block;
+width:8px;
+height:16px;
+background:#58a6ff;
+margin-left:5px;
+animation:blink 1s infinite;
 }
 
-.countdown {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+@keyframes blink{
+0%{opacity:0}
+50%{opacity:1}
+100%{opacity:0}
 }
 
-.time-box {
-    flex: 1;
-    min-width: 120px;
-    margin: 10px;
-    padding: 25px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.08);
-    transition: 0.4s ease;
-    position: relative;
+/* progress bar */
+
+.progress-container{
+margin-top:30px;
+background:#0d1117;
+border-radius:10px;
+overflow:hidden;
+border:1px solid #30363d;
 }
 
-.time-box:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 0 25px #00f5ff;
+.progress-bar{
+height:10px;
+width:0%;
+background:linear-gradient(90deg,#58a6ff,#3fb950);
+animation:load 10s linear forwards;
 }
 
-.time-box h2 {
-    font-size: 38px;
-    font-weight: 600;
-    color: #00f5ff;
-    text-shadow: 0 0 10px #00f5ff;
-    animation: pulse 2s infinite;
+@keyframes load{
+0%{width:0%}
+100%{width:100%}
 }
 
-@keyframes pulse {
-    0% { text-shadow: 0 0 10px #00f5ff; }
-    50% { text-shadow: 0 0 20px #00f5ff; }
-    100% { text-shadow: 0 0 10px #00f5ff; }
+.status{
+margin-top:12px;
+font-size:13px;
+opacity:0.7;
 }
 
-.time-box span {
-    font-size: 12px;
-    opacity: 0.7;
-    letter-spacing: 2px;
+.footer{
+margin-top:25px;
+font-size:12px;
+opacity:0.5;
+text-align:center;
 }
 
-.progress-bar {
-    height: 5px;
-    width: 0%;
-    background: linear-gradient(90deg, #00f5ff, #00ff9d);
-    border-radius: 10px;
-    margin-top: 40px;
-    transition: width 1s linear;
+@media(max-width:600px){
+.container{
+padding:25px;
+}
 }
 
-.footer {
-    margin-top: 30px;
-    font-size: 12px;
-    opacity: 0.6;
-}
-
-@media (max-width: 600px) {
-    .countdown {
-        flex-direction: column;
-        align-items: center;
-    }
-}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>🚀 Something Better is Compiling...</h1>
-    <p>Stand by while I ship the next evolution.</p>
 
-    <div class="countdown">
-        <div class="time-box">
-            <h2 id="days">00</h2>
-            <span>DAYS</span>
-        </div>
-        <div class="time-box">
-            <h2 id="hours">00</h2>
-            <span>HOURS</span>
-        </div>
-        <div class="time-box">
-            <h2 id="minutes">00</h2>
-            <span>MINUTES</span>
-        </div>
-        <div class="time-box">
-            <h2 id="seconds">00</h2>
-            <span>SECONDS</span>
-        </div>
-    </div>
+<div class="title">$ compiling portfolio_v2...</div>
 
-    <div class="progress-bar" id="progressBar"></div>
+<div class="terminal" id="terminal"></div>
 
-    <div class="footer">
-        © 2026 | Kiran Mahara
-    </div>
+<div class="progress-container">
+<div class="progress-bar"></div>
+</div>
+
+<div class="status">Building something awesome...</div>
+
+<div class="footer">
+© 2026 | Kiran Mahara
+</div>
+
 </div>
 
 <script>
-const launchDate = new Date("March 1, 2026 12:00:00").getTime();
-const startDate = new Date().getTime();
 
-const countdown = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = launchDate - now;
+const lines = [
+"> Initializing project...",
+"> Loading components...",
+"> Optimizing performance...",
+"> Building UI modules...",
+"> Connecting backend...",
+"> Running final checks...",
+"> Portfolio v2 launching soon..."
+];
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+let i = 0;
+const terminal = document.getElementById("terminal");
 
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
+function typeLine(){
+if(i < lines.length){
+let line = document.createElement("div");
+line.textContent = lines[i];
+terminal.appendChild(line);
+i++;
+setTimeout(typeLine,800);
+}
+}
 
-    // Progress bar animation
-    const totalDuration = launchDate - startDate;
-    const elapsed = now - startDate;
-    const progressPercent = Math.min((elapsed / totalDuration) * 100, 100);
-    document.getElementById("progressBar").style.width = progressPercent + "%";
+typeLine();
 
-    if (distance < 0) {
-        clearInterval(countdown);
-        document.querySelector(".container").innerHTML =
-            "<h1>🎉 Portfolio is Live!</h1>";
-    }
-}, 1000);
 </script>
 
 </body>
 </html>
+```
